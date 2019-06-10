@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="app">
-    <p>{{ message }}了解{{ message1}}</p>
+    <p>{{ details() }}</p>
 </div>
 <div id="app1">
     <table>
@@ -32,6 +32,11 @@
         data: {
             message: '欢迎',
             message1:'韩城大红袍'
+        },
+        methods: {
+            details:function() {
+                return  this.message +"了解"+ this.message1;
+            }
         }
     })
     new Vue({
