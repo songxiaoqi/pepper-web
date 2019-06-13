@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <title>韩城花椒</title>
     <script type="text/javascript" src="../js/Vue.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
+
+<form >
+    <input style="width: 200px" id="card" name="card" type="text" maxlength="17" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入身份证前17位">
+    <input type="button" value="校验" onclick="javascript:submits();">
+    <input style="width: 200px" id="result" type="text" name="result" placeholder="结果">
+</form>
 <div id="app">
     <p>{{ details() }}</p>
+    <!--<p>{{ details1() }}</p>-->
 </div>
 <div id="app1">
     <table>
@@ -34,12 +42,17 @@
             message1:'韩城大红袍'
         },
         methods: {
-            details:function() {
+            details: function() {
                 return  this.message +"了解"+ this.message1;
             }
         }
+        /*methods:{
+            details1: function(){
+                return '1';
+            }
+        }*/
     })
-    new Vue({
+    var ve = new Vue({
         el:'#app1',
         data:{
             name:'品种',
@@ -50,6 +63,20 @@
             price2:'200'
         }
     })
+    ve.name='类型';
+    document.write(ve.$data.name);
+
+    function submits(){
+        var card = $("#card").val();
+        $.ajax({url:"/pepper/card?card="+card,
+            success:function(result){
+                if(result==1){
+                    alert("请输入正确的身份证前17位");
+                }else{
+                    $("#result").val(result);
+                }
+            }});
+    }
 </script>
 </body>
 </html>
