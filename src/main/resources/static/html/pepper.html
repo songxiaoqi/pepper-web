@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<style type="text/css">
-.divForm{
-  position: absolute;/*绝对定位*/
-  width: 500px;
-  height: 250px;
-
-  border: 1px solid red;
-  text-align: center;/*(让div中的内容居中)*/
-  top: 50%;
-  left: 50%;
-  margin-top: -200px;
-  margin-left: -150px;
-}
-</style>
 <head>
     <meta charset="utf-8">
     <title>身份证校验</title>
+    <link rel="stylesheet" href="../css/pepper.css">
     <script type="text/javascript" src="../js/Vue.js" ></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <div class="divForm">
-    <h1>身份证校验位计算</h1>
+    <!--<h1>身份证校验位计算</h1>-->
     <form >
         <input style="width: 200px;margin-top: 30px" id="card" name="card" type="text" maxlength="17" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入身份证前17位">
         <br>
@@ -31,70 +18,19 @@
         <input style="margin-top: 30px" type="button" value="校验" onclick="javascript:submits();">
     </form>
 </div>
-<!--<div id="app">-->
-    <!--<p>{{ details() }}</p>-->
-    <!--&lt;!&ndash;<p>{{ details1() }}</p>&ndash;&gt;-->
-<!--</div>-->
-<!--<div id="app1">-->
-    <!--<table>-->
-        <!--<tr>-->
-            <!--<th>{{name}}</th>-->
-            <!--<th>{{ price }}</th>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>{{ name1 }}</td>-->
-            <!--<td>{{ price1 }}</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>{{ name2 }}</td>-->
-            <!--<td>{{ price2 }}</td>-->
-        <!--</tr>-->
-    <!--</table>-->
-<!--</div>-->
 
 <script>
-    // new Vue({
-    //     el: '#app',
-    //     data: {
-    //         message: '欢迎',
-    //         message1:'韩城大红袍'
-    //     },
-    //     methods: {
-    //         details: function() {
-    //             return  this.message +"了解"+ this.message1;
-    //         }
-    //     }
-    //     /*methods:{
-    //         details1: function(){
-    //             return '1';
-    //         }
-    //     }*/
-    // })
-    // var ve = new Vue({
-    //     el:'#app1',
-    //     data:{
-    //         name:'品种',
-    //         price:'价格',
-    //         name1:'大红袍',
-    //         price1:'100',
-    //         name2:'狮子头',
-    //         price2:'200'
-    //     }
-    // })
-    // ve.name='类型';
-    // document.write(ve.$data.name);
-
-    function submits(){
-        var card = $("#card").val();
-        $.ajax({url:"/pepper/card?card="+card,
-            success:function(result){
-                if(result==1){
-                    alert("请输入正确的身份证前17位");
-                }else{
-                    $("#result").val(result);
-                }
-            }});
-    }
+function submits(){
+    var card = $("#card").val();
+    $.ajax({url:"/pepper/card?card="+card,
+        success:function(result){
+            if(result==1){
+                alert("请输入正确的身份证前17位");
+            }else{
+                $("#result").val(result);
+            }
+        }});
+}
 </script>
 </body>
 </html>

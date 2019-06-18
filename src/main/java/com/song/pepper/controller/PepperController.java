@@ -16,46 +16,21 @@ import java.util.List;
 public class PepperController {
 
 
+    /**
+     * 身份证校验页面
+     * @return
+     */
     @RequestMapping(value="/vue",method = {RequestMethod.GET,RequestMethod.POST})
     public ModelAndView vueTest(){
         return new ModelAndView("pepper");
     }
-    @RequestMapping(value="/fileUpload",method = {RequestMethod.GET})
-    public ModelAndView vueTest1(){
-        return new ModelAndView("mpepper");
-    }
-
 
     /**
-     * 实现文件上传
-     * */
-    @RequestMapping(value="/fileUpload",method = {RequestMethod.POST})
-    @ResponseBody
-    public String fileUpload(@RequestParam("fileName") MultipartFile file){
-        if(file.isEmpty()){
-            return "false";
-        }
-        String fileName = file.getOriginalFilename();
-        int size = (int) file.getSize();
-        System.out.println(fileName + "-->" + size);
-
-        String path = "F:/test" ;
-        File dest = new File(path + "/" + fileName);
-        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
-        }
-        try {
-            file.transferTo(dest); //保存文件
-            return "true";
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            return "false";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "false";
-        }
-    }
-
+     * 身份证校验位计算
+     * @param card
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/card",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Object card(String card) throws Exception {
@@ -138,7 +113,6 @@ public class PepperController {
 
     @GetMapping("/upload")
     public ModelAndView upload(HttpServletRequest request) throws Exception {
-        System.out.println(System.getProperty("user.dir"));
         return new ModelAndView("upload");
     }
 
@@ -158,35 +132,4 @@ public class PepperController {
         }
         return "上传失败！";
     }
-
-    @GetMapping("/multiUpload")
-    public String multiUpload() {
-
-        return "multiUpload";
-    }
-
-    @PostMapping("/multiUpload")
-    @ResponseBody
-    public String multiUpload(HttpServletRequest request) {
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-        String filePath = "/Users/itinypocket/workspace/temp/";
-        for (int i = 0; i < files.size(); i++) {
-            MultipartFile file = files.get(i);
-            if (file.isEmpty()) {
-                return "上传第" + (i++) + "个文件失败";
-            }
-            String fileName = file.getOriginalFilename();
-
-            File dest = new File(filePath + fileName);
-            try {
-                file.transferTo(dest);
-            } catch (IOException e) {
-                return "上传第" + (i++) + "个文件失败";
-            }
-        }
-
-        return "上传成功";
-
-    }
-
 }
